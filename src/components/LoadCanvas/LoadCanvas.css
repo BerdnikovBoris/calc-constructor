@@ -1,0 +1,110 @@
+.load_app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.load_cont {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+  width: 695px;
+  height: 640px;
+  background: #ffffff;
+}
+
+.load_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 100vw; */
+  height: 100vh;
+}
+
+.load_board {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 300px;
+  min-height: 400px;
+  border: 5px solid lightgray;
+  padding: 20px 10px;
+  border-radius: 12px;
+  margin: 10px;
+}
+
+.load_item {
+  width: 100%;
+  border: 2px solid lightpink;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 5px 0;
+  cursor: grab;
+  background-color: #fcfcf9;
+}
+
+.calc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 243px;
+  height: 448px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.canv_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 243px;
+  height: 448px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.drop_area {
+  width: 80vw;
+  height: 448px;
+  border-radius: 6px;
+  border: 5px dashed black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop_items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 243px;
+  height: 448px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.downloaded_item {
+  width: 243px;
+  border: 2px solid lightpink;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 5px 0;
+  background-color: #fff;
+  position: relative;
+  z-index: 999;
+}
+
+.drop_text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
