@@ -10,21 +10,28 @@ interface DropAreaProps {
 }
 
 const DropArea = (props: DropAreaProps) => {
+  const {
+    dragLeaveHandler,
+    dragOverHandler,
+    dropHandler,
+    drag,
+    downloadedItems,
+  } = props;
   return (
     <div className="canv_wrap">
-      {props.drag ? (
+      {drag ? (
         <div
           className="drop_area"
           draggable={false}
-          onDragLeave={(e) => props.dragLeaveHandler(e)}
-          onDragOver={(e) => props.dragOverHandler(e)}
-          onDrop={(e) => props.dropHandler(e)}
+          onDragLeave={(e) => dragLeaveHandler(e)}
+          onDragOver={(e) => dragOverHandler(e)}
+          onDrop={(e) => dropHandler(e)}
         ></div>
-      ) : props.downloadedItems.length === 0 ? (
+      ) : downloadedItems.length === 0 ? (
         <div className="drop_text">
           <h3
-            onDragLeave={(e) => props.dragLeaveHandler(e)}
-            onDragOver={(e) => props.dragOverHandler(e)}
+            onDragLeave={(e) => dragLeaveHandler(e)}
+            onDragOver={(e) => dragOverHandler(e)}
           >
             Перетащите сюда
           </h3>
@@ -32,7 +39,7 @@ const DropArea = (props: DropAreaProps) => {
         </div>
       ) : (
         <div className="drop_items">
-          {props.downloadedItems.map((item) => (
+          {downloadedItems.map((item) => (
             <div className="downloaded_item" key={item.id}>
               {item.title}
             </div>

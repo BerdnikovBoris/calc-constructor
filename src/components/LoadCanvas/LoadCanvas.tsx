@@ -5,7 +5,7 @@ import Calculator from '../Calculator/Calculator';
 import DropArea from '../DropArea/DropArea';
 
 const LoadCanvas = () => {
-  const [data, setData] = useState<ICalc[]>();
+  const [data, setData] = useState<ICalc[]>([]);
   const [drag, setDrag] = useState<boolean>(false);
   const [downloadedItems, setDownloadedItems] = useState<ICalc[]>([]);
 
@@ -37,13 +37,12 @@ const LoadCanvas = () => {
   const dropHandler = (e: any) => {
     e.preventDefault();
     const droppedItemId = e.dataTransfer.getData('id');
-    const droppedItem = calculate.find(
+    const droppedItem = data.find(
       (item) => item.id.toString() === droppedItemId
     );
     if (droppedItem) {
       setDownloadedItems((prevState) => [...prevState, droppedItem]);
     }
-
     setDrag(false);
   };
 

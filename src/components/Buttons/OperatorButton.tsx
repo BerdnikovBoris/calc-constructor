@@ -1,27 +1,25 @@
 import React from 'react';
-import { Operator } from '../Calculator/Calculator';
+import { Operator } from '../../uikit/UIRender';
 
 interface OperatorButtonProps {
-  handleOperator: (value: Operator) => void;
+  onClick: (value: Operator) => void;
 }
 
 const OperatorButton = (props: OperatorButtonProps) => {
-  const { handleOperator } = props;
+  const { onClick } = props;
 
   return (
     <div draggable={true}>
-      <button onClick={() => handleOperator(Operator.DIVIDE)}>
+      <button onClick={() => onClick(Operator.DIVIDE)}>
         {Operator.DIVIDE}
       </button>
-      <button onClick={() => handleOperator(Operator.MULTIPLY)}>
+      <button onClick={() => onClick(Operator.MULTIPLY)}>
         {Operator.MULTIPLY}
       </button>
-      <button onClick={() => handleOperator(Operator.SUBTRACT)}>
+      <button onClick={() => onClick(Operator.SUBTRACT)}>
         {Operator.SUBTRACT}
       </button>
-      <button onClick={() => handleOperator(Operator.ADD)}>
-        {Operator.ADD}
-      </button>
+      <button onClick={() => onClick(Operator.ADD)}>{Operator.ADD}</button>
     </div>
   );
 };

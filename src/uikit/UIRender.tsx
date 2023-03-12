@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
-import { ICalc } from '../../models';
-import UIRender from '../../uikit/UIRender';
-import EqualButton from '../Buttons/EqualButton';
-import InputButton from '../Buttons/InputButton';
-import OperatorButton from '../Buttons/OperatorButton';
-import Display from '../Display/Display';
-
-interface CalculatorProps {
-  dragStartHandler: (e: any, id: number) => void;
-  dragEndHandler: (e: any) => void;
-}
+import EqualButton from '../components/Buttons/EqualButton';
+import InputButton from '../components/Buttons/InputButton';
+import OperatorButton from '../components/Buttons/OperatorButton';
+import Display from '../components/Display/Display';
+import { ICalc } from '../models';
 
 export enum Operator {
   ADD = '+',
@@ -18,8 +12,11 @@ export enum Operator {
   DIVIDE = '/',
 }
 
-const Calculator = (props: CalculatorProps) => {
-  const { dragEndHandler, dragStartHandler } = props;
+interface IUIRenderProps {
+  id: number;
+}
+
+const UIRender = (props: IUIRenderProps) => {
   const [input, setInput] = useState<string>('0');
   const [operator, setOperator] = useState<Operator | null>(null);
   const [previousNumber, setPreviousNumber] = useState<number | null>(null);
@@ -85,37 +82,30 @@ const Calculator = (props: CalculatorProps) => {
     setPreviousNumber(null);
   }
 
-  const display = <Display value={input} />;
-  const operButton = <OperatorButton onClick={handleOperator} />;
-  const inButton = <InputButton onClick={handleInput} />;
-  const eqButton = <EqualButton onClick={handleEqual} />;
-
   const calculate: ICalc[] = [
-    { id: 1, title: display },
-    { id: 2, title: operButton },
-    { id: 3, title: inButton },
-    { id: 4, title: eqButton },
+    { id: 1, title: <Display value={input} /> },
+    { id: 2, title: <OperatorButton onClick={handleOperator} /> },
+    { id: 3, title: <InputButton onClick={handleInput} /> },
+    { id: 4, title: <EqualButton onClick={handleEqual} /> },
   ];
 
+  const res = calculate.find((item) => item.id === props.id);
+
   return (
-    <div>
-      <UIRender id={2} />
+    <div className="calc">
+      {calculate.map((item) => (
+        <div className="downloaded_item" key={item.id}>
+          {item.title}
+        </div>
+      ))}
     </div>
   );
 };
 
-export default Calculator;
+export default UIRender;
 
-// <div className="calc">
-//   {calculate.map((item) => (
-//     <div
-//       className="downloaded_item"
-//       key={item.id}
-//       draggable={true}
-//       onDragStart={(e) => dragStartHandler(e, item.id)}
-//       onDragEnd={(e) => dragEndHandler(e)}
-//     >
-//       <UIRender id={1} />
-//     </div>
-//   ))}
-// </div>
+// draggable={true}
+// onDragStart={(e) => dragStartHandler(e, item.id)}
+// onDragEnd={(e) => dragEndHandler(e)}
+
+// const item = calculate.find((item) => item.id === props.id);
