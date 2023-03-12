@@ -1,3 +1,4 @@
+import Calculator from './components/Calculator/Calculator';
 import LoadCanvas from './components/LoadCanvas/LoadCanvas';
 
 function App() {

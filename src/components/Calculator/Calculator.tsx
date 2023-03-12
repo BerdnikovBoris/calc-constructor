@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { ICalc } from '../../models';
 import EqualButton from '../Buttons/EqualButton';
 import InputButton from '../Buttons/InputButton';
 import OperatorButton from '../Buttons/OperatorButton';
 import Display from '../Display/Display';
+
+interface CalculatorProps {
+  dragStartHandler: (e: any, id: number) => void;
+  dragEndHandler: (e: any) => void;
+}
 
 export enum Operator {
   ADD = '+',
@@ -11,7 +17,7 @@ export enum Operator {
   DIVIDE = '/',
 }
 
-const Calculator = () => {
+const Calculator = (props: CalculatorProps) => {
   const [input, setInput] = useState<string>('0');
   const [operator, setOperator] = useState<Operator | null>(null);
   const [previousNumber, setPreviousNumber] = useState<number | null>(null);
@@ -77,17 +83,31 @@ const Calculator = () => {
     setPreviousNumber(null);
   }
 
-  return (
-    <div>
-      <Display value={input} />
-      <br />
-      <OperatorButton handleOperator={handleOperator} />
-      <br />
-      <InputButton onClick={handleInput} />
-      <br />
-      <EqualButton onClick={handleEqual} />
+  const display = <Display value={input} />;
+  const operButton = <OperatorButton handleOperator={handleOperator} />;
+  const inButton = <InputButton onClick={handleInput} />;
+  const eqButton = <EqualButton onClick={handleEqual} />;
 
-      <br />
+  const calculate: ICalc[] = [
+    { id: 1, title: display },
+    { id: 2, title: operButton },
+    { id: 3, title: inButton },
+    { id: 4, title: eqButton },
+  ];
+
+  return (
+    <div className="calc">
+      {calculate.map((item) => (
+        <div
+          className="downloaded_item"
+          key={item.id}
+          draggable={true}
+          onDragStart={(e) => props.dragStartHandler(e, item.id)}
+          onDragEnd={(e) => props.dragEndHandler(e)}
+        >
+          {item.title}
+        </div>
+      ))}
     </div>
   );
 };

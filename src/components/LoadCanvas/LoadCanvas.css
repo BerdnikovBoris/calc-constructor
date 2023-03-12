@@ -82,6 +82,7 @@
 
 .drop_items {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 243px;

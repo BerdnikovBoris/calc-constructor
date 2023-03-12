@@ -1,98 +1,84 @@
 import React, { useState } from 'react';
-import { ICalc, IItems } from '../../models';
+import { ICalc } from '../../models';
 import './LoadCanvas.css';
-
-let calculate: IItems[] = [
-  { id: 1, title: 'display' },
-  { id: 2, title: 'operrButton' },
-  { id: 3, title: 'inButton' },
-  { id: 4, title: 'eqButton' },
-];
+import Calculator from '../Calculator/Calculator';
+import DropArea from '../DropArea/DropArea';
 
 const LoadCanvas = () => {
-  const [data, setData] = useState<IItems[]>(calculate);
+  const [data, setData] = useState<ICalc[]>();
   const [drag, setDrag] = useState<boolean>(false);
-  const [downloadedItems, setDownloadedItems] = useState<IItems[]>([]);
+  const [downloadedItems, setDownloadedItems] = useState<ICalc[]>([]);
 
   const dragStartHandler = (e: any, id: number) => {
-    // e.preventDefault();
-    e.dataTransfer.setData('text/plain', id.toString());
-    setData((prevState) => prevState.filter((val) => val.id !== id));
-    console.log(e, e.dataTransfer);
+    e.dataTransfer.setData('id', id.toString());
+    setData((prevState) => prevState?.filter((val) => val.id !== id));
+    console.log(data);
     setDrag(true);
-    console.log('драг отправляет');
+    e.target.style.display = 'block';
   };
 
   const dragLeaveHandler = (e: any) => {
     e.preventDefault();
-    setDrag(false);
+    setDrag(true);
     setDownloadedItems([]);
   };
 
   const dragOverHandler = (e: any) => {
     e.preventDefault();
-    setDrag(false);
+    setDrag(true);
+  };
+
+  const dragEndHandler = (e: any) => {
+    e.preventDefault();
+    e.target.style.opacity = '0.5';
+    e.target.style.pointerEvents = 'none';
   };
 
   const dropHandler = (e: any) => {
-    console.log('дроп работает');
     e.preventDefault();
-    const droppedItemId = e.dataTransfer.getData('text/plain');
+    const droppedItemId = e.dataTransfer.getData('id');
     const droppedItem = calculate.find(
       (item) => item.id.toString() === droppedItemId
     );
     if (droppedItem) {
       setDownloadedItems((prevState) => [...prevState, droppedItem]);
     }
+
     setDrag(false);
   };
 
   return (
     <div className="load_app">
       <div className="load_cont">
-        <div className="calc">
-          {calculate.map((item) => (
-            <div
-              key={item.id}
-              draggable={true}
-              onDragStart={(e) => dragStartHandler(e, item.id)}
-            >
-              {item.title}
-            </div>
-          ))}
-        </div>
+        <Calculator
+          dragStartHandler={dragStartHandler}
+          dragEndHandler={dragEndHandler}
+        />
 
-        <div className="canv_wrap">
-          {drag ? (
-            <div
-              className="drop_area"
-              onDragLeave={(e) => dragLeaveHandler(e)}
-              onDragOver={(e) => dragOverHandler(e)}
-              onDrop={(e) => dropHandler(e)}
-            ></div>
-          ) : downloadedItems.length !== 0 ? (
-            <div className="drop_items">
-              {downloadedItems.map((item) => (
-                <div className="downloaded_item" key={item.id}>
-                  {item.title}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="drop_text">
-              <h3
-                onDragLeave={(e) => dragLeaveHandler(e)}
-                onDragOver={(e) => dragOverHandler(e)}
-              >
-                Перетащите сюда
-              </h3>
-              <p>любой элемент</p>
-            </div>
-          )}
-        </div>
+        <DropArea
+          dragLeaveHandler={dragLeaveHandler}
+          dragOverHandler={dragOverHandler}
+          dropHandler={dropHandler}
+          drag={drag}
+          downloadedItems={downloadedItems}
+        />
       </div>
     </div>
   );
 };
 
 export default LoadCanvas;
+
+// const [isCalculator, setIsCalculator] = useState(true);
+// const handleCalculatorButtonClick = () => {
+//   setIsCalculator(true);
+// };
+
+// const handleDropAreaButtonClick = () => {
+//   setIsCalculator(false);
+// };
+
+{
+  /* <button onClick={handleCalculatorButtonClick}>Калькулятор</button>
+      <button onClick={handleDropAreaButtonClick}>Drop area</button> */
+}
